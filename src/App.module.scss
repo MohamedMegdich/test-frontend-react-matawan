@@ -42,22 +42,79 @@
   font-size: 13px;
 }
 
-.hero {
+.gameCard {
   border-radius: $radiusLg;
 }
 
-.h2 {
-  margin: 0 0 $space-2 0;
-  font-size: 22px;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-5;
 }
 
-.p {
-  margin: 0;
+.col {
+  display: grid;
+  gap: $space-2;
+}
+
+.sectionTitle {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.bottom {
+  margin-top: $space-5;
+  display: grid;
+  gap: $space-3;
+}
+
+.actions {
+  display: flex;
+  gap: $space-3;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.primaryBtn {
+  border: 1px solid $border;
+  background: rgba(255, 255, 255, 0.1);
+  color: $text;
+  border-radius: $radius;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.primaryBtn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+}
+
+.primaryBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.primaryBtn:focus-visible {
+  @include focus-ring;
+}
+
+.hint {
   color: $textMuted;
+  font-size: 13px;
 }
 
 .footer {
   color: $textMuted;
   font-size: 13px;
   padding-bottom: $space-2;
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }

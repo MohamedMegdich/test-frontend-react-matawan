@@ -1,0 +1,23 @@
+@use '../../styles/variables' as *;
+
+.banner {
+  border: 1px solid $border;
+  background: $panel;
+  border-radius: $radius;
+  padding: $space-3;
+  font-weight: 700;
+}
+
+.neutral {
+  color: $text;
+}
+
+.p1 {
+  border-color: rgba(120, 160, 255, 0.35);
+  background: rgba(120, 160, 255, 0.12);
+}
+
+.p2 {
+  border-color: rgba(255, 120, 200, 0.35);
+  background: rgba(255, 120, 200, 0.12);
+}
