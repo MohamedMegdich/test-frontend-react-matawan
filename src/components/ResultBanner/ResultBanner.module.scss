@@ -6,6 +6,18 @@
   border-radius: $radius;
   padding: $space-3;
   font-weight: 700;
+  animation: fadeUp 180ms ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .neutral {

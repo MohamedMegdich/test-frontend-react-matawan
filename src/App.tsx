@@ -91,7 +91,6 @@ export default function App() {
       if (cvcInterval.current) window.clearInterval(cvcInterval.current);
       cvcInterval.current = null;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, cvcRunning, cvcSpeedMs]);
 
   const result: RoundResult | null = useMemo(() => {
@@ -158,6 +157,8 @@ export default function App() {
   }
 
   const namesDisabled = mode === 'CVC';
+  const p1WinnerClass = phase === 'RESULT' && result === 'P1_WIN' ? styles.p1Win : '';
+  const p2WinnerClass = phase === 'RESULT' && result === 'P2_WIN' ? styles.p2Win : '';
 
   return (
     <div className={styles.page}>
@@ -166,7 +167,7 @@ export default function App() {
           <div className={styles.logo}>RPS</div>
           <div>
             <div className={styles.title}>Rock • Paper • Scissors</div>
-            <div className={styles.subtitle}>TypeScript + SCSS • Best practice structure</div>
+            <div className={styles.subtitle}>Animations + prefers-reduced-motion</div>
           </div>
         </div>
       </header>
@@ -197,7 +198,7 @@ export default function App() {
           <section className={`card ${styles.gameCard}`}>
             <div className="cardInner">
               <div className={styles.grid}>
-                <div className={styles.col}>
+                <div className={`${styles.col} ${p1WinnerClass}`}>
                   <div className={styles.sectionTitle}>{p1Name}</div>
                   <MovePicker
                     label="Player 1 move picker"
@@ -210,7 +211,7 @@ export default function App() {
                   />
                 </div>
 
-                <div className={styles.col}>
+                <div className={`${styles.col} ${p2WinnerClass}`}>
                   <div className={styles.sectionTitle}>{p2Name}</div>
                   <MovePicker
                     label="Player 2 move picker"

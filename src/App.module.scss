@@ -65,6 +65,32 @@
 .col {
   display: grid;
   gap: $space-2;
+  border-radius: $radiusLg;
+  padding: $space-2;
+}
+
+.p1Win {
+  border: 1px solid rgba(120, 160, 255, 0.35);
+  background: rgba(120, 160, 255, 0.08);
+  animation: winnerPulse 700ms ease;
+}
+
+.p2Win {
+  border: 1px solid rgba(255, 120, 200, 0.35);
+  background: rgba(255, 120, 200, 0.08);
+  animation: winnerPulse 700ms ease;
+}
+
+@keyframes winnerPulse {
+  from {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .sectionTitle {
