@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { ModeToggle } from './components/ModeToggle/ModeToggle';
 import { MovePicker } from './components/MovePicker/MovePicker';
@@ -7,6 +7,7 @@ import { ResultBanner } from './components/ResultBanner/ResultBanner';
 import { Scoreboard, type Score } from './components/Scoreboard/Scoreboard';
 import type { GameMode } from './domain/modes';
 import type { Move } from './domain/moves';
+import { randomMove } from './domain/random';
 import { decideWinner, resultLabel, type RoundResult } from './domain/rules';
 import styles from './App.module.scss';
 
@@ -25,10 +26,23 @@ export default function App() {
   const [phase, setPhase] = useState<Phase>('P1_PICK');
   const [score, setScore] = useState<Score>(initialScore);
 
+  const [thinking, setThinking] = useState(false);
+  const pvcTimer = useRef<number | null>(null);
+
   useEffect(() => {
+    return () => {
+      if (pvcTimer.current) window.clearTimeout(pvcTimer.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (pvcTimer.current) window.clearTimeout(pvcTimer.current);
+    pvcTimer.current = null;
+
+    setThinking(false);
     setP1Move(null);
     setP2Move(null);
-    setPhase(mode === 'CVC' ? 'RESULT' : 'P1_PICK');
+    setPhase(mode === 'PVP' ? 'P1_PICK' : 'P1_PICK');
     setScore(initialScore);
 
     if (mode === 'PVC') {
@@ -68,27 +82,45 @@ export default function App() {
     return r;
   }
 
-  function onPickP1(m: Move) {
+  function onPickP1_PVP(m: Move) {
     setP1Move(m);
     setPhase('P2_PICK');
   }
 
-  function onPickP2(m: Move) {
+  function onPickP2_PVP(m: Move) {
     setP2Move(m);
     setPhase('RESULT');
     applyResultAndScore(p1Move!, m);
   }
 
+  function onPickP1_PVC(m: Move) {
+    if (phase === 'RESULT' || thinking) return;
+
+    setP1Move(m);
+    setThinking(true);
+
+    pvcTimer.current = window.setTimeout(() => {
+      const comp = randomMove();
+      setP2Move(comp);
+      setPhase('RESULT');
+      applyResultAndScore(m, comp);
+      setThinking(false);
+      pvcTimer.current = null;
+    }, 450);
+  }
+
   function nextRound() {
+    if (pvcTimer.current) window.clearTimeout(pvcTimer.current);
+    pvcTimer.current = null;
+
+    setThinking(false);
     setP1Move(null);
     setP2Move(null);
-    setPhase(mode === 'CVC' ? 'RESULT' : 'P1_PICK');
+    setPhase('P1_PICK');
   }
 
   function resetAll() {
-    setP1Move(null);
-    setP2Move(null);
-    setPhase(mode === 'CVC' ? 'RESULT' : 'P1_PICK');
+    nextRound();
     setScore(initialScore);
   }
 
@@ -116,7 +148,6 @@ export default function App() {
             onChangeP1={(v) => setP1Name(v)}
             onChangeP2={(v) => setP2Name(v)}
           />
-
           {namesDisabled ? <div className={styles.note}>Names are fixed in Computer vs Computer.</div> : null}
 
           <Scoreboard p1Name={p1Name} p2Name={p2Name} score={score} onReset={resetAll} />
@@ -129,19 +160,25 @@ export default function App() {
                   <MovePicker
                     label="Player 1 move picker"
                     selected={p1Move}
-                    disabled={mode !== 'PVP' || phase !== 'P1_PICK'}
-                    onPick={onPickP1}
+                    disabled={phase !== 'P1_PICK' || thinking || mode === 'CVC'}
+                    onPick={mode === 'PVP' ? onPickP1_PVP : onPickP1_PVC}
                   />
                 </div>
 
                 <div className={styles.col}>
                   <div className={styles.sectionTitle}>{p2Name}</div>
+
+                  {/* In PVP, Player 2 picks. In PVC, show disabled picker with computer's choice */}
                   <MovePicker
                     label="Player 2 move picker"
                     selected={p2Move}
                     disabled={mode !== 'PVP' || phase !== 'P2_PICK'}
-                    onPick={onPickP2}
+                    onPick={onPickP2_PVP}
                   />
+
+                  {mode === 'PVC' ? (
+                    <div className={styles.hintInline}>{thinking ? 'Computer is thinking…' : ' '}</div>
+                  ) : null}
                 </div>
               </div>
 
@@ -153,7 +190,7 @@ export default function App() {
                     type="button"
                     className={styles.primaryBtn}
                     onClick={nextRound}
-                    disabled={mode === 'PVP' ? phase !== 'RESULT' : true}
+                    disabled={mode === 'PVP' ? phase !== 'RESULT' : phase !== 'RESULT'}
                   >
                     Next round
                   </button>
@@ -162,7 +199,12 @@ export default function App() {
                     {mode === 'PVP' && phase === 'P1_PICK' && 'Player 1: choose your move'}
                     {mode === 'PVP' && phase === 'P2_PICK' && 'Player 2: choose your move'}
                     {mode === 'PVP' && phase === 'RESULT' && 'Round complete'}
-                    {mode !== 'PVP' && 'Mode logic will be added in the next commits'}
+
+                    {mode === 'PVC' && phase === 'P1_PICK' && 'Choose your move'}
+                    {mode === 'PVC' && thinking && 'Computer is choosing…'}
+                    {mode === 'PVC' && phase === 'RESULT' && 'Round complete'}
+
+                    {mode === 'CVC' && 'CVC logic will be added next'}
                   </div>
                 </div>
               </div>

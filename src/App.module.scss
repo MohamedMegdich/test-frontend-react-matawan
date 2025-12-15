@@ -72,6 +72,12 @@
   letter-spacing: 0.2px;
 }
 
+.hintInline {
+  height: 18px;
+  font-size: 13px;
+  color: $textMuted;
+}
+
 .bottom {
   margin-top: $space-5;
   display: grid;
