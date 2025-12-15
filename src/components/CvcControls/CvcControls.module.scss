@@ -1,0 +1,46 @@
+@use '../../styles/variables' as *;
+
+.wrap {
+  display: flex;
+  gap: $space-3;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: 1px solid $border;
+  background: rgba(255, 255, 255, 0.1);
+  color: $text;
+  border-radius: $radius;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.btn:focus-visible {
+  @include focus-ring;
+}
+
+.label {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+  color: $textMuted;
+  font-size: 13px;
+}
+
+.select {
+  border: 1px solid $border;
+  background: $panel;
+  color: $text;
+  border-radius: $radius;
+  padding: 8px 10px;
+}
+
+.select:focus-visible {
+  @include focus-ring;
+}
