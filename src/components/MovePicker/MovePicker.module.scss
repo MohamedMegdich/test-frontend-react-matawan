@@ -1,0 +1,57 @@
+@use '../../styles/variables' as *;
+
+.wrap {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $space-2;
+}
+
+.btn {
+  border: 1px solid $border;
+  background: $panel;
+  border-radius: $radius;
+  padding: $space-3;
+  color: $text;
+  cursor: pointer;
+  display: grid;
+  gap: 6px;
+  place-items: center;
+  min-height: 88px;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.btn:hover {
+  background: $panel2;
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn:focus-visible {
+  @include focus-ring;
+}
+
+.selected {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.11);
+}
+
+.emoji {
+  font-size: 26px;
+}
+
+.text {
+  font-size: 13px;
+  color: $textMuted;
+}
+
+@media (max-width: 520px) {
+  .btn {
+    padding: $space-2;
+    min-height: 76px;
+  }
+}
