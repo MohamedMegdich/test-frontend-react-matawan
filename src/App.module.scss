@@ -47,6 +47,11 @@
   gap: $space-4;
 }
 
+.note {
+  color: $textMuted;
+  font-size: 13px;
+}
+
 .gameCard {
   border-radius: $radiusLg;
 }
