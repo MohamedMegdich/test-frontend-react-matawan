@@ -1,0 +1,63 @@
+@use './styles/variables' as *;
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: $space-5;
+  padding-block: $space-5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: $panel2;
+  border: 1px solid $border;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.title {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.subtitle {
+  color: $textMuted;
+  font-size: 13px;
+}
+
+.hero {
+  border-radius: $radiusLg;
+}
+
+.h2 {
+  margin: 0 0 $space-2 0;
+  font-size: 22px;
+}
+
+.p {
+  margin: 0;
+  color: $textMuted;
+}
+
+.footer {
+  color: $textMuted;
+  font-size: 13px;
+  padding-bottom: $space-2;
+}
