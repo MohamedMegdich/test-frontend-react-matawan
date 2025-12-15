@@ -1,0 +1,24 @@
+$bg: #0b1020;
+$panel: rgba(255, 255, 255, 0.06);
+$panel2: rgba(255, 255, 255, 0.09);
+$text: rgba(255, 255, 255, 0.92);
+$textMuted: rgba(255, 255, 255, 0.72);
+$border: rgba(255, 255, 255, 0.12);
+$shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+
+$radius: 18px;
+$radiusLg: 24px;
+
+$space-1: 8px;
+$space-2: 12px;
+$space-3: 16px;
+$space-4: 20px;
+$space-5: 24px;
+$space-6: 32px;
+
+$maxWidth: 980px;
+
+@mixin focus-ring {
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+  outline-offset: 2px;
+}
