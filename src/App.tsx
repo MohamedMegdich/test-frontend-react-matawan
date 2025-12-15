@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import { MovePicker } from './components/MovePicker/MovePicker';
+import { PlayerNames } from './components/PlayerNames/PlayerNames';
 import { ResultBanner } from './components/ResultBanner/ResultBanner';
 import { Scoreboard, type Score } from './components/Scoreboard/Scoreboard';
 import type { Move } from './domain/moves';
@@ -12,13 +13,13 @@ type Phase = 'P1_PICK' | 'P2_PICK' | 'RESULT';
 const initialScore: Score = { p1: 0, p2: 0, draws: 0, rounds: 0 };
 
 export default function App() {
+  const [p1Name, setP1Name] = useState('Player 1');
+  const [p2Name, setP2Name] = useState('Player 2');
+
   const [p1Move, setP1Move] = useState<Move | null>(null);
   const [p2Move, setP2Move] = useState<Move | null>(null);
   const [phase, setPhase] = useState<Phase>('P1_PICK');
   const [score, setScore] = useState<Score>(initialScore);
-
-  const p1Name = 'Player 1';
-  const p2Name = 'Player 2';
 
   const result: RoundResult | null = useMemo(() => {
     if (!p1Move || !p2Move) return null;
@@ -76,6 +77,8 @@ export default function App() {
 
       <main className="container">
         <div className={styles.stack}>
+          <PlayerNames p1Name={p1Name} p2Name={p2Name} onChangeP1={setP1Name} onChangeP2={setP2Name} />
+
           <Scoreboard p1Name={p1Name} p2Name={p2Name} score={score} onReset={resetAll} />
 
           <section className={`card ${styles.gameCard}`}>
