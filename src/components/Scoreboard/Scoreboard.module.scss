@@ -1,0 +1,68 @@
+@use '../../styles/variables' as *;
+
+.wrap {
+  border: 1px solid $border;
+  background: $panel;
+  border-radius: $radius;
+  padding: $space-4;
+  display: grid;
+  gap: $space-3;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 0.7fr 1fr;
+  gap: $space-2;
+}
+
+.item {
+  border: 1px solid $border;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: $radius;
+  padding: $space-3;
+  display: grid;
+  gap: 6px;
+  text-align: center;
+}
+
+.label {
+  color: $textMuted;
+  font-size: 12px;
+}
+
+.value {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-3;
+  color: $textMuted;
+  font-size: 13px;
+}
+
+.reset {
+  border: 1px solid $border;
+  background: transparent;
+  color: $text;
+  border-radius: $radius;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.reset:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.reset:focus-visible {
+  @include focus-ring;
+}
+
+@media (max-width: 520px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

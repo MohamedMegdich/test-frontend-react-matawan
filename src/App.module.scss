@@ -42,6 +42,11 @@
   font-size: 13px;
 }
 
+.stack {
+  display: grid;
+  gap: $space-4;
+}
+
 .gameCard {
   border-radius: $radiusLg;
 }
